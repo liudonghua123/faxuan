@@ -1,6 +1,6 @@
 let callback = response => {
     console.log('The Popup got the following Message: ' + JSON.stringify(response));
-    $('#result').text(`today score: ${response.scores[6]}, total score: ${response.scores[12]}`);
+    $('#result').text(`today: ${response.scores[6]}, total: ${response.scores[12]}`);
 };
 
 $('.porintButton').click(function() {
