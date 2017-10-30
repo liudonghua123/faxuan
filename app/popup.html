@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- build:css styles/popup-vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link href="styles/main.css" rel="stylesheet">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <button type="button" id="loginPointButton" class="porintButton btn btn-primary col-sm-12">登录赚积分</button>
+      </div>
+      <div class="form-group">
+        <button type="button" id="completionPointButton" class="porintButton btn btn-primary col-sm-12">完善信息赚积分</button>
+      </div>
+      <div class="form-group">
+        <button type="button" id="learningPointButton" class="porintButton btn btn-primary col-sm-12">课程学习赚积分</button>
+      </div>
+      <div class="form-group">
+        <button type="button" id="exercisePointButton" class="porintButton btn btn-primary col-sm-12">做题赚积分</button>
+      </div>
+      <div class="form-group">
+        <p id="result">result...</p>
+      </div>
+      </form>
+
+    <!-- build:js scripts/popup-vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <script src="browser-polyfill.js"></script>
+    <!-- build:js scripts/popup.js -->
+    <script src="scripts/popup.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
