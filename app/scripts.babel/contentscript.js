@@ -51,9 +51,9 @@ let doExercise = () => {
 
 };
 
-let timesAction = (times, action) => {
+let timesAction = async (times, action) => {
     for (var i = 0; i <= times; ++i) {
-        action();
+        await action();
     }
 };
 
@@ -97,22 +97,26 @@ chrome.runtime.onConnect.addListener(port => {
         let scores = [];
         switch (request.action) {
             case 'login':
-                timesAction(2, doLogin);
+                await timesAction(2, doLogin);
                 scores = await getScore();
                 port.postMessage({ action: request.action, result: 'ok', scores: scores });
                 break;
             case 'completion':
-                timesAction(1, doCompletion);
+                await timesAction(1, doCompletion);
                 scores = await getScore();
                 port.postMessage({ action: request.action, result: 'ok', scores: scores });
                 break;
             case 'learning':
-                timesAction(3, doLearning);
+                await timesAction(3, doLearning);
                 scores = await getScore();
                 port.postMessage({ action: request.action, result: 'ok', scores: scores });
                 break;
             case 'exercise':
-                timesAction(3, doExercise);
+                await timesAction(3, doExercise);
+                scores = await getScore();
+                port.postMessage({ action: request.action, result: 'ok', scores: scores });
+                break;
+            case 'score':
                 scores = await getScore();
                 port.postMessage({ action: request.action, result: 'ok', scores: scores });
                 break;

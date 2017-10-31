@@ -18,8 +18,6 @@
   "permissions": [
     "http://*.faxuan.net/*",
     "background",
-    "clipboardRead",
-    "clipboardWrite",
     "contentSettings",
     "cookies",
     "*://*.google.com/",
