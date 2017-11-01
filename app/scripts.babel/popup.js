@@ -1,6 +1,11 @@
 let callback = response => {
     console.log('The Popup got the following Message: ' + JSON.stringify(response));
-    $('#result').text(`today: ${response.scores[6]}, total: ${response.scores[12]}`);
+    if(response.scores) {
+        $('#result').text(`today: ${response.scores[6]}, total: ${response.scores[12]}`);
+    }
+    else {
+        $('#result').text(`${JSON.stringify(response)}`);
+    }
 };
 
 let processResult = () => {
@@ -31,4 +36,34 @@ $('.porintButton').click(function() {
             break;
     }
     return true;
+});
+
+let enable = (element, enabled) => {
+    if(enabled) {
+        element.removeAttr('disabled')
+    }
+    else {
+        element.attr('disabled','disabled')
+    }
+}
+
+$(() => {
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        const currentTab = tabs[0];
+        const currentTabUrl = currentTab.url;
+        if(currentTabUrl.indexOf('http://www.faxuan.net') == 0) {
+            enable($('#loginPointButton'), true);
+            enable($('#completionPointButton'), false);
+            enable($('#learningPointButton'), false);
+            enable($('#exercisePointButton'), false);
+            enable($('#scorePointButton'), false);
+        }
+        else if(currentTabUrl.indexOf('http://xf.faxuan.net') == 0) {
+            enable($('#loginPointButton'), false);
+            enable($('#completionPointButton'), true);
+            enable($('#learningPointButton'), true);
+            enable($('#exercisePointButton'), false);
+            enable($('#scorePointButton'), true);
+        }
+    });
 });

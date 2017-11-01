@@ -98,8 +98,8 @@ chrome.runtime.onConnect.addListener(port => {
         switch (request.action) {
             case 'login':
                 await timesAction(2, doLogin);
-                scores = await getScore();
-                port.postMessage({ action: request.action, result: 'ok', scores: scores });
+                // scores = await getScore();
+                port.postMessage({ action: request.action, result: 'ok' });
                 break;
             case 'completion':
                 await timesAction(1, doCompletion);
