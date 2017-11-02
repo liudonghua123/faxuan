@@ -19,14 +19,14 @@ npm install
 Build the extension
 
 ```bash
-gulp babel
+gulp build
 ```
 
 
 Package the extension
 
 ```bash
-gulp build
+gulp package
 ```
 
 Build the extension for development
