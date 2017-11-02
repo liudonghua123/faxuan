@@ -69,7 +69,6 @@ const getScore = () => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.info('contentscript', request, sender);
-    let scores = [];
     switch (request.action) {
         case 'login':
             Promise.all([doLogin(), doLogin()])
