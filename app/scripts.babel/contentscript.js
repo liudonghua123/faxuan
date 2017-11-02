@@ -1,6 +1,6 @@
 console.info('contentscript run here!');
 
-let doLogin = () => {
+const doLogin = async () => {
     $.ajax({
         type: 'POST',
         cache: false,
@@ -9,55 +9,36 @@ let doLogin = () => {
             userAccount: JSON.parse(Cookies.get('loginUser')).userAccount,
             domainCode: JSON.parse(Cookies.get('loginUser')).domainCode,
             sid: JSON.parse(Cookies.get('loginUser')).sid
-        },
-        success: function (data) {
-            console.info(data);
-        },
-        error: function (data) {
-            console.error(data);
         }
     });
 };
 
-let doCompletion = () => {
-    var b = '/pss/service/postPoint' + '?operateType=ipoint&userAccount=' + JSON.parse(Cookies.get('loginUser')).userAccount + '&domainCode=' + JSON.parse(Cookies.get('loginUser')).domainCode + '&timestamp=' + new Date();
+const doCompletion = async () => {
     $.ajax({
         type: 'GET',
-        url: b,
-        success: function (data) {
-            console.info(data);
-        },
-        error: function (data) {
-            console.error(data);
-        }
+        url: 'http://xf.faxuan.net/pss/service/postPoint' + '?operateType=ipoint&userAccount=' + JSON.parse(Cookies.get('loginUser')).userAccount + '&domainCode=' + JSON.parse(Cookies.get('loginUser')).domainCode + '&timestamp=' + new Date()
     });
 };
 
-let doLearning = () => {
-    var b = '/pss/service/postPoint' + '?operateType=spoint&userAccount=' + JSON.parse(Cookies.get('loginUser')).userAccount + '&domainCode=' + JSON.parse(Cookies.get('loginUser')).domainCode + '&timestamp=' + new Date() + '&stime=' + 15;
+const doLearning = async () => {
     $.ajax({
         type: 'GET',
-        url: b,
-        success: function (data) {
-            console.info(data);
-        },
-        error: function (data) {
-            console.error(data);
-        }
+        url: 'http://xf.faxuan.net/pss/service/postPoint' + '?operateType=spoint&userAccount=' + JSON.parse(Cookies.get('loginUser')).userAccount + '&domainCode=' + JSON.parse(Cookies.get('loginUser')).domainCode + '&timestamp=' + new Date() + '&stime=' + 15
     });
 };
 
-let doExercise = () => {
+const doExercise = () => {
 
 };
 
-let timesAction = async (times, action) => {
-    for (var i = 0; i <= times; ++i) {
-        await action();
+const timesAction = async (times, action) => {
+    for (let i = 0; i < times; i++) {
+        const result = await action();
+        console.info(JSON.stringify(result));
     }
 };
 
-let nrMultiLineText2Array = function (d) {
+const nrMultiLineText2Array = function (d) {
     var b = d.split('\r\n');
     var a = new Array();
     for (var c = 0; c < b.length; c++) {
@@ -72,19 +53,19 @@ let nrMultiLineText2Array = function (d) {
     return a
 }
 
-let getScore = async () => {
+const getScore = async () => {
     try {
         let rawScore = await $.ajax({
             type: 'GET',
-            url: '/pss/service/getpoint?type=mypoint&timestamp=' + Date.parse(new Date()),
+            url: 'http://xf.faxuan.net/pss/service/getpoint?type=mypoint&timestamp=' + Date.parse(new Date()),
             data: {
                 userAccount: JSON.parse(Cookies.get('loginUser')).userAccount,
                 key: Math.floor(Math.random() * 50)
             }
         });
         let scores = nrMultiLineText2Array(rawScore);
-        console.info(scores);
         // scores like ['1030', '0', '60', '10', '40', '1', '111', '0', '1120', '225', '760', '18', '2123']
+        console.info(scores);
         return scores;
     } catch (e) {
         console.error(e);
@@ -98,7 +79,6 @@ chrome.runtime.onConnect.addListener(port => {
         switch (request.action) {
             case 'login':
                 await timesAction(2, doLogin);
-                // scores = await getScore();
                 port.postMessage({ action: request.action, result: 'ok' });
                 break;
             case 'completion':
