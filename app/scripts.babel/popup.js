@@ -12,26 +12,36 @@ let processResult = () => {
     $('#result').text(`processing...`);
 }
 
-$('.porintButton').click(function() {
+$('.porintButton').click(function () {
     switch (this.id) {
         case 'loginPointButton':
-            chrome.runtime.sendMessage({ action: 'login' }, callback);
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'login' }, callback);
+            });
             processResult();
             break;
         case 'completionPointButton':
-            chrome.runtime.sendMessage({ action: 'completion' }, callback);
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'completion' }, callback);
+            });
             processResult();
             break;
         case 'learningPointButton':
-            chrome.runtime.sendMessage({ action: 'learning' }, callback);
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'learning' }, callback);
+            });
             processResult();
             break;
         case 'exercisePointButton':
-            chrome.runtime.sendMessage({ action: 'exercise' }, callback);
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'exercise' }, callback);
+            });
             processResult();
             break;
         case 'scorePointButton':
-            chrome.runtime.sendMessage({ action: 'score' }, callback);
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'score' }, callback);
+            });
             processResult();
             break;
     }
